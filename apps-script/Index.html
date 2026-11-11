@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>برج الفؤاد الطبي — نظام المطابقة المالية</title>
+<style>
+:root {
+  --bg: #f4f7fc;
+  --surface: #ffffff;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --primary: #2563eb;
+  --primary-light: #eff6ff;
+  --accent: #3b82f6;
+  --warn: #d97706;
+  --warn-light: #fef3c7;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --success: #16a34a;
+  --success-light: #dcfce7;
+  --radius: 12px;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #090d16;
+    --surface: #111827;
+    --fg: #f3f4f6;
+    --muted: #9ca3af;
+    --line: #1f2937;
+    --primary: #3b82f6;
+    --primary-light: #1e3a8a33;
+    --warn: #f59e0b;
+    --warn-light: #451a0333;
+    --danger: #ef4444;
+    --danger-light: #7f1d1d33;
+    --success: #22c55e;
+    --success-light: #064e3b33;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #111827;
+  --fg: #f3f4f6;
+  --muted: #9ca3af;
+  --line: #1f2937;
+  --primary: #3b82f6;
+  --primary-light: #1e3a8a33;
+  --warn: #f59e0b;
+  --warn-light: #451a0333;
+  --danger: #ef4444;
+  --danger-light: #7f1d1d33;
+  --success: #22c55e;
+  --success-light: #064e3b33;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+/* Header Design */
+header.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+header.top h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+header.top h1::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 24px;
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+header.top .sub {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.status {
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+.status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--warn); }
+.status.ok .dot { background: var(--success); }
+
+/* Navigation Tabs */
+nav.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  background: var(--surface);
+  padding: 8px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+nav.tabs a {
+  padding: 10px 18px;
+  border-radius: calc(var(--radius) - 4px);
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+nav.tabs a:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+nav.tabs a.active {
+  color: #ffffff;
+  background: var(--primary);
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+/* Views & Cards */
+section.view {
+  display: grid;
+  gap: 20px;
+}
+
+h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  min-width: 0;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+@media (max-width: 1024px) {
+  .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .g4, .g2 { grid-template-columns: 1fr; }
+}
+
+/* Tiles & Widgets */
+.tile {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.tile::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; width: 4px; height: 100%;
+  background: var(--primary);
+}
+.tile .lbl { font-size: 0.8rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.tile .cur { font-weight: 800; font-size: 1.15rem; margin: 4px 0 10px; color: var(--fg); }
+.tile .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+  padding: 6px 0;
+  border-top: 1px dashed var(--line);
+  font-size: 0.88rem;
+}
+.tile .row:first-of-type { border-top: 0; }
+.tile .row b { font-weight: 600; }
+
+.num { font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; text-align: left; }
+td.num, th.num { text-align: left; }
+
+.pos { color: var(--warn); } 
+.neg { color: var(--danger); } 
+.zero { color: var(--success); }
+
+/* Tables */
+.tablewrap { overflow-x: auto; min-width: 0; border-radius: 8px; border: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: right; vertical-align: middle; white-space: nowrap; }
+th { font-weight: 600; color: var(--muted); font-size: 0.8rem; background: var(--primary-light); text-transform: uppercase; letter-spacing: 0.5px; }
+tr:last-child td { border-bottom: 0; }
+tr.total td { font-weight: 700; background: var(--primary-light); }
+td.t { font-size: 0.85rem; color: var(--muted); white-space: normal; min-width: 180px; }
+
+/* Chips / Badges */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.chip.good { background: var(--success-light); color: var(--success); }
+.chip.warn { background: var(--warn-light); color: var(--warn); }
+.chip.bad { background: var(--danger-light); color: var(--danger); }
+.chip.mute { background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+
+/* Forms & Controls */
+form.f {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  align-items: end;
+}
+
+label.fld {
+  display: grid;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+  min-width: 0;
+}
+
+input, select, textarea {
+  font: inherit;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 100%;
+  min-width: 0;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+input[type=number] { direction: ltr; text-align: left; font-variant-numeric: tabular-nums; }
+
+button {
+  font: inherit;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--fg);
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button:hover { background: var(--bg); border-color: var(--muted); }
+button.primary { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2); }
+button.primary:hover { background: #1d4ed8; }
+button.danger { color: var(--danger); border-color: var(--danger-light); background: var(--danger-light); }
+button.sm { padding: 6px 12px; font-size: 0.8rem; }
+button:disabled { opacity: 0.5; cursor: default; }
+
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
+.note { font-size: 0.85rem; color: var(--muted); }
+
+/* Dropzone */
+.drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.drop:hover, .drop.over { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+.drop input { display: none; }
+
+.review td select { padding: 6px 10px; font-size: 0.85rem; width: 180px; }
+#xTable td input, #xTable td select { padding: 5px 8px; font-size: 0.85rem; width: auto; }
+#xTable td input[type=number] { width: 110px; } #xTable td input[type=date] { width: 140px; } #xTable td input[type=time] { width: 125px; }
+#xTable td input.nt { width: 200px; } #xTable td input.no { width: 90px; } #xTable td select { width: 100px; } #xTable td input[type=checkbox] { width: auto; }
+.decision { display: grid; gap: 12px; }
+.decision .item { padding: 14px 16px; border-radius: 8px; background: var(--bg); border-right: 5px solid var(--line); border: 1px solid var(--line); border-right-width: 5px; }
+.decision .item.warn { border-right-color: var(--warn); background: var(--warn-light); }
+.decision .item.bad { border-right-color: var(--danger); background: var(--danger-light); }
+.decision .item.good { border-right-color: var(--success); background: var(--success-light); }
+.decision .item b { display: block; margin-bottom: 4px; font-size: 0.95rem; }
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 50%;
+  transform: translateX(50%);
+  background: var(--fg);
+  color: var(--bg);
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+}
+.toast.show { opacity: 1; }
+
+footer {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.alert { padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; }
+.alert.warn { background: var(--warn-light); color: var(--warn); }
+.alert.good { background: var(--success-light); color: var(--success); }
+.empty { color: var(--muted); text-align: center; padding: 24px; font-size: 0.9rem; }
+.codes { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.8rem; direction: ltr; unicode-bidi: isolate; }
+#auth { position: fixed; inset: 0; background: var(--bg); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+#auth form { width: 100%; max-width: 400px; display: grid; gap: 14px; }
+#auth h2 { margin: 0; }
+#auErr { color: var(--danger); min-height: 1.4em; }
+.who { font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+@media (max-width: 640px) {
+  #app { padding: 12px 12px 32px; }
+  header.top { padding: 14px 16px; margin-bottom: 12px; }
+  header.top h1 { font-size: 1.05rem; }
+  header.top .sub { display: none; }
+  nav.tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 6px; margin-bottom: 14px; scrollbar-width: none; }
+  nav.tabs::-webkit-scrollbar { display: none; }
+  nav.tabs a { white-space: nowrap; flex: 0 0 auto; padding: 8px 12px; font-size: 0.85rem; }
+  .card { padding: 16px; }
+  form.f { grid-template-columns: 1fr 1fr; gap: 10px; }
+  form.f .actions { grid-column: 1 / -1; margin-top: 4px; }
+  form.f .actions button { width: 100%; }
+  input, select { font-size: 16px; }
+}
+@media print {
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]) { --bg:#fff !important; --surface:#fff !important; --fg:#000 !important; --muted:#333 !important; --line:#bbb !important; --primary-light:#eee !important; --shadow:none !important; }
+  header.top, nav.tabs, form, button, .toast, footer { display: none !important; }
+  #app { padding: 0; max-width: none; }
+  .card, .tile { box-shadow: none; padding: 8px 0; border: 0; }
+  .tile { border: 1px solid var(--line); padding: 8px 12px; }
+  .tablewrap { overflow: visible; }
+  th, td { white-space: normal; padding: 5px 6px; font-size: 11px; }
+  td.t { min-width: 0; }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<div id="app" lang="ar">
+  <header class="top">
+    <div>
+      <h1>برج الفؤاد الطبي — مطابقة محفظة جيب مع حسابات المحصلين</h1>
+      <div class="sub">كشف محفظة جيب في مقابل ما يظهر في حساب كل محصل في سيستم البرج — ريال يمني، ريال سعودي، دولار، يورو</div>
+    </div>
+    <div class="status" id="status"><span class="dot"></span><span id="statusTxt">جارٍ التحميل…</span></div>
+    <div class="who" id="who" hidden><span id="whoName"></span><button type="button" class="sm" id="btnRefresh">تحديث</button><button type="button" class="sm" id="btnLogout">خروج</button></div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <a href="#overview" data-v="overview">📊 الملخص والقرار</a>
+    <a href="#daily" data-v="daily">📅 المقارنة اليومية</a>
+    <a href="#match" data-v="match">🔗 المطابقة التفصيلية</a>
+    <a href="#stmt" data-v="stmt">📄 كشف محفظة جيب</a>
+    <a href="#entries" data-v="entries">💻 حساب المحصل بالسيستم</a>
+    <a href="#rep" data-v="rep">👤 كشف حساب المحصل</a>
+    <a href="#setup" data-v="setup">⚙️ المحصلون والإعدادات</a>
+  </nav>
+
+  <section class="view" id="v-overview" hidden>
+    <div class="grid g4" id="ovTiles"></div>
+    <div class="card"><h2>موقف كل محصل (كل الفترة المسجلة)</h2><div class="tablewrap"><table id="ovTable"></table></div></div>
+    <div class="card"><h2>القرار المقترح</h2><div class="decision" id="ovDecision"></div></div>
+  </section>
+
+  <section class="view" id="v-daily" hidden>
+    <div class="card"><form class="f" onsubmit="return false">
+      <label class="fld">اليوم<input type="date" id="dDate"></label>
+      <label class="fld">العملة<select id="dCur"><option value="ALL">كل العملات</option><option value="YER">ريال يمني</option><option value="SAR">ريال سعودي</option><option value="USD">دولار</option><option value="EUR">يورو</option></select></label>
+    </form></div>
+    <div class="card"><h2 id="dTitle">مقارنة اليوم</h2><div class="tablewrap"><table id="dTable"></table></div></div>
+    <div class="card"><h2>عمليات جيب في هذا اليوم</h2><div class="tablewrap"><table id="dStmt"></table></div></div>
+  </section>
+
+  <section class="view" id="v-match" hidden>
+    <div class="card"><form class="f" onsubmit="return false">
+      <label class="fld">المحصل<select id="mColl"></select></label>
+      <label class="fld">من<input type="date" id="mFrom"></label>
+      <label class="fld">إلى<input type="date" id="mTo"></label>
+      <label class="fld">العرض<select id="mShow"><option value="all">كل العمليات</option><option value="bad">الفروقات فقط</option></select></label>
+    </form></div>
+    <div class="card">
+      <h2>مطابقة كل حوالة في كشف جيب مع السند الذي أثبتها في السيستم</h2>
+      <p class="note" style="margin:-8px 0 14px">العميل يحوّل إلى محفظة جيب مباشرة، والمحصل يثبت الحوالة في حسابه بالسيستم. لذلك تُنسب كل حوالة للمحصل الذي أثبتها بسند، بمطابقة التاريخ والمبلغ والوقت واسم الدافع. السند المُدخل نقدي ويقابله تحويل في الكشف يظهر «مُدخل نقدي وهو تحويل جيب»، وما لا يقابله شيء هو نقدي فعلي.</p>
+      <div id="mSummary" class="actions" style="margin:0 0 14px"></div>
+      <div class="tablewrap"><table id="mTable"></table></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-stmt" hidden>
+    <div class="card">
+      <h2>استيراد كشف محفظة جيب (PDF)</h2>
+      <p class="note">ارفع كشف العمليات الصادر من تطبيق جيب ملفاً واحداً أو عدة ملفات. يُقرأ كل سطر بدقة من الكشف نفسه، وتُنسب كل حوالة للمحصل الذي أثبتها بسند في السيستم.</p>
+      <label class="drop" id="drop"><input type="file" id="files" multiple accept="application/pdf"><b>اضغط لاختيار ملفات الكشف</b> أو اسحبها هنا</label>
+      <div class="actions" style="margin-top:16px"><span class="note" id="pStatus"></span></div>
+      <div id="pChecks" style="margin-top:10px;display:grid;gap:6px"></div>
+    </div>
+    <div class="card" id="reviewCard" hidden>
+      <h2>مراجعة العمليات المقروءة</h2>
+      <div class="actions" style="margin-bottom:12px">
+        <button class="primary" id="btnSaveReview">حفظ العمليات الجديدة</button>
+        <button id="btnClearReview">إلغاء</button>
+        <span class="note" id="reviewNote"></span>
+      </div>
+      <div class="tablewrap review"><table id="reviewTable"></table></div>
+    </div>
+    <div class="card">
+      <h2>العمليات المحفوظة</h2>
+      <form class="f" onsubmit="return false" style="margin-bottom:16px">
+        <label class="fld">من<input type="date" id="sFrom"></label>
+        <label class="fld">إلى<input type="date" id="sTo"></label>
+        <label class="fld">المحصل<select id="sColl"><option value="">الكل</option></select></label>
+        <label class="fld">النوع<select id="sKind"><option value="in">وارد (تحصيل)</option><option value="out">صادر</option><option value="all">الكل</option></select></label>
+      </form>
+      <div class="tablewrap"><table id="stmtTable"></table></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-entries" hidden>
+    <div class="card">
+      <h2>ما يظهر في حساب المحصل في سيستم البرج (نهاية اليوم)</h2>
+      <form class="f" id="eForm">
+        <label class="fld">التاريخ<input type="date" id="eDate" required></label>
+        <label class="fld">المحصل<select id="eColl" required></select></label>
+        <label class="fld">العملة<select id="eCur"><option value="YER">ريال يمني</option><option value="SAR">ريال سعودي</option><option value="USD">دولار</option><option value="EUR">يورو</option></select></label>
+        <label class="fld">مُدخل نقدي في السيستم<input type="number" id="eCash" step="0.01" min="0" placeholder="0"></label>
+        <label class="fld">مُدخل إيداع جيب في السيستم<input type="number" id="eJaib" step="0.01" min="0" placeholder="0"></label>
+        <label class="fld">ملاحظة<input type="text" id="eNote" placeholder="اختياري"></label>
+        <div class="actions"><button class="primary" type="submit">حفظ الإدخال</button></div>
+      </form>
+    </div>
+    <div class="card">
+      <h2>استيراد كشف المحصل من السيستم</h2>
+      <p class="note">ارفع كشف المحصل بأي صيغة: PDF، Excel، Word، أو صورة/تصوير بالجوال. يقرأ النظام السندات ويعرضها للمراجعة قبل الحفظ. أدق النتائج من PDF أو Excel المصدَّر من السيستم، والصور تحتاج مراجعة أكثر.</p>
+      <form class="f" onsubmit="return false">
+        <label class="fld">المحصل صاحب الكشف<select id="xColl"></select></label>
+      </form>
+      <label class="drop" id="xDrop" style="margin-top:14px"><input type="file" id="xFiles" multiple accept="application/pdf,image/*,.xlsx,.xls,.csv,.ods,.docx,.doc,.odt,.rtf"><b>اضغط لاختيار ملفات كشف المحصل</b> أو اسحبها هنا</label>
+      <div class="actions"><input type="file" id="xCam" accept="image/*" capture="environment" hidden><button type="button" id="btnXCam">📷 تصوير الكشف بالكاميرا</button><span class="note" id="xStatus"></span></div>
+    </div>
+    <div class="card" id="xReviewCard" hidden>
+      <h2>مراجعة السندات المقروءة</h2>
+      <div class="actions" style="margin:0 0 12px">
+        <button class="primary" id="btnXSave">حفظ السندات المحددة</button>
+        <button id="btnXClear">إلغاء</button>
+        <span class="note" id="xNote"></span>
+      </div>
+      <div class="tablewrap review"><table id="xTable"></table></div>
+    </div>
+    <div class="card">
+      <h2>سندات المحصل في السيستم (تفصيلي — سند بسند)</h2>
+      <p class="note">أدخل سندات المحصل كما تظهر في شاشة «إقفال الورديات»، سواء أدخلها نقدي أو محفظة جيب. عند المطابقة مع كشف جيب يتبيّن أي سند كان تحويلاً فعلاً وأيها نقدي، حتى لو أدخلها المحصل كلها نقدي.</p>
+      <form class="f" id="vForm">
+        <label class="fld">التاريخ<input type="date" id="vDate" required></label>
+        <label class="fld">الوقت<input type="time" id="vTime"></label>
+        <label class="fld">المحصل<select id="vColl" required></select></label>
+        <label class="fld">العملة<select id="vCur"><option value="YER">ريال يمني</option><option value="SAR">ريال سعودي</option><option value="USD">دولار</option><option value="EUR">يورو</option></select></label>
+        <label class="fld">طريقة الدفع المُدخلة في السيستم<select id="vMethod"><option value="jaib">محفظة جيب</option><option value="cash">نقدي</option></select></label>
+        <label class="fld">المبلغ<input type="number" id="vAmt" step="0.01" min="0" placeholder="0" required></label>
+        <label class="fld">رقم السند<input type="text" id="vNo" inputmode="numeric"></label>
+        <label class="fld">البيان (اسم الدافع)<input type="text" id="vNote"></label>
+        <div class="actions"><button class="primary" type="submit">إضافة السند</button></div>
+      </form>
+      <div class="tablewrap" style="margin-top:16px"><table id="vTable"></table></div>
+    </div>
+    <div class="card"><h2>آخر ما سُجّل من حسابات المحصلين</h2><div class="tablewrap"><table id="eTable"></table></div></div>
+  </section>
+
+  <section class="view" id="v-rep" hidden>
+    <div class="card"><form class="f" onsubmit="return false">
+      <label class="fld">المحصل<select id="rColl"></select></label>
+      <label class="fld">من<input type="date" id="rFrom"></label>
+      <label class="fld">إلى<input type="date" id="rTo"></label>
+      <div class="actions"><button type="button" class="primary" id="btnPrint">طباعة كشف الحساب</button></div>
+    </form></div>
+    <div class="card" id="rHeadCard" hidden><h2 id="rHead" style="margin:0"></h2><div class="note" id="rHeadSub"></div></div>
+    <div class="grid g4" id="rTiles"></div>
+    <div class="card"><h2>الموقف اليومي للمحصل (الكشف مقابل السيستم)</h2><div class="tablewrap"><table id="rDays"></table></div></div>
+    <div class="card"><h2>الحركة التفصيلية (سند بسند)</h2><div class="tablewrap"><table id="rTx"></table></div></div>
+  </section>
+
+  <section class="view" id="v-setup" hidden>
+    <div class="grid g2">
+      <div class="card">
+        <h2>المحصلون ونقاط التحصيل</h2>
+        <p class="note">رقم النقطة هو الرقم الذي يظهر في بيان كل عملية في كشف جيب. يمكن ربط أكثر من نقطة بمحصل واحد مفصولة بفاصلة.</p>
+        <form class="f" id="collForm">
+          <label class="fld">اسم المحصل<input type="text" id="collName" required></label>
+          <label class="fld">أرقام النقاط<input type="text" id="collCodes" placeholder="5356212, 5356213"></label>
+          <label class="fld">أسماء أخرى في الكشف<input type="text" id="collAlias" placeholder="اختياري"></label>
+          <div class="actions"><button class="primary" type="submit">إضافة محصل</button></div>
+        </form>
+        <div class="tablewrap" style="margin-top:16px"><table id="collTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>الإعدادات والنسخ الاحتياطي</h2>
+        <form class="f" id="setForm">
+          <label class="fld">هامش التسامح في المطابقة<input type="number" id="tol" step="0.01" placeholder="1"></label>
+          <label class="fld">تنبيه إذا تكرر الفرق لأكثر من (أيام)<input type="number" id="days" step="1" placeholder="2"></label>
+          <div class="actions"><button class="primary" type="submit">حفظ الإعدادات</button></div>
+        </form>
+        
+        </div>
+      </div>
+    </div>
+    <div class="card" id="usersCard" hidden>
+      <h2>المستخدمون</h2>
+      <p class="note">المدير يضيف المستخدمين ويحذفهم. لتغيير رمز مستخدم احذفه وأضفه من جديد بالرمز الجديد. البيانات كلها محفوظة في ملف Google Sheets ومشتركة بين جميع الأجهزة.</p>
+      <form class="f" id="userForm" autocomplete="off">
+        <label class="fld">اسم المستخدم<input type="text" id="uName" required></label>
+        <label class="fld">الرمز<input type="password" id="uPass" required></label>
+        <label class="fld">الصلاحية<select id="uRole"><option value="user">مستخدم</option><option value="admin">مدير</option></select></label>
+        <div class="actions"><button class="primary" type="submit">إضافة مستخدم</button></div>
+      </form>
+      <div class="tablewrap" style="margin-top:16px"><table id="uTable"></table></div>
+    </div>
+  </section>
+
+  <footer>إعداد: أصيل أمين — نظام إدارة ومطابقة الحسابات الطبية</footer>
+</div>
+<div id="auth" hidden>
+  <form id="authForm" class="card" autocomplete="off">
+    <h2 id="authTitle">برج الفؤاد الطبي</h2>
+    <p class="note" id="authNote" style="margin:0"></p>
+    <label class="fld">اسم المستخدم<input type="text" id="auUser" required></label>
+    <label class="fld">الرمز<input type="password" id="auPass" required></label>
+    <label class="fld" id="auPass2Wrap" hidden>تأكيد الرمز<input type="password" id="auPass2"></label>
+    <button class="primary" type="submit" id="auBtn">دخول</button>
+    <div class="note" id="auErr"></div>
+  </form>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+if(!window.pdfjsLib){window.pdfjsReady=new Promise(res=>{const a=document.createElement("script");a.src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";a.onload=()=>{const b=document.createElement("script");b.src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js";b.onload=()=>res(window.pdfjsLib||null);b.onerror=()=>res(null);document.head.appendChild(b)};a.onerror=()=>res(null);document.head.appendChild(a)})}
+</script>
+<script>
+(function(){
+"use strict";
+const CURS=["YER","SAR","USD","EUR"];
+const CURN={YER:"ريال يمني",SAR:"ريال سعودي",USD:"دولار",EUR:"يورو"};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>{n=Number(n)||0;return n.toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:2})};
+const today=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+let toastT;function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2800)}
+
+const S={colls:[],entries:[],stmt:[],vouchers:[],settings:{tol:1,days:2},db:null,review:[]};
+const tol=()=>Number(S.settings.tol)||1;
+
+// ---------- persistence ----------
+function localSave(){}
+function localLoad(){}
+const arrOf=col=>col==="collectors"?S.colls:col==="entries"?S.entries:col==="vouchers"?S.vouchers:S.stmt;
+function call(fn,...args){return new Promise((res,rej)=>{google.script.run.withSuccessHandler(res).withFailureHandler(e=>{const m=(e&&e.message)||String(e);if(/SESSION_EXPIRED/.test(m)){sessionEnded();rej(new Error("انتهت الجلسة"));return}rej(new Error(m))})[fn](...args)})}
+function upsertLocal(col,rows){const arr=arrOf(col);for(const r of rows){const i=arr.findIndex(x=>x.id===r.id);if(i<0)arr.push(r);else arr[i]=r}}
+async function saveMany(col,rows,onProgress){for(let i=0;i<rows.length;i+=150){const chunk=rows.slice(i,i+150);await call("putRows",S.token,col,chunk);upsertLocal(col,chunk);if(onProgress)onProgress(Math.min(i+150,rows.length))}renderAll()}
+async function save(col,id,data){await saveMany(col,[{...data,id}])}
+async function remove(col,id){await call("deleteRow",S.token,col,id);const arr=arrOf(col);const i=arr.findIndex(x=>x.id===id);if(i>=0)arr.splice(i,1);renderAll()}
+async function saveSettings(){await call("saveSettings",S.token,S.settings);renderAll()}
+
+// ---------- matching ----------
+function norm(s){return String(s||"").normalize("NFKC").replace(/[ً-ْـ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/\s+/g," ").trim()}
+function collByCode(code){if(!code)return null;return S.colls.find(c=>(c.codes||[]).includes(code))||null}
+function collByName(name){const n=norm(name);if(!n)return null;for(const c of S.colls){const cands=[c.name,...(c.aliases||[])].map(norm).filter(Boolean);if(cands.some(x=>x===n||n.includes(x)||x.includes(n)))return c}return null}
+function matchColl(row){const c=collByCode(row.code)||collByName(row.pointName);return c?c.id:""}
+const collName=id=>id?((S.colls.find(c=>c.id===id)||{}).name||"محصل محذوف"):"غير منسوب";
+
+// ---------- calc ----------
+const zero=()=>({YER:0,SAR:0,USD:0,EUR:0});
+function aggregate(filter){
+  const m={};const get=id=>m[id]||(m[id]={actual:zero(),jaib:zero(),cash:zero(),lastDay:null});
+  for(const r of ST()){if(r.kind!=="in"||(filter&&!filter(r)))continue;const g=get(r.coll||"");g.actual[r.cur]+=r.amount;if(!g.lastDay||r.date>g.lastDay)g.lastDay=r.date}
+  for(const e of S.entries){if(filter&&!filter(e))continue;const g=get(e.coll);g.jaib[e.cur]+=+e.jaib||0;g.cash[e.cur]+=+e.cash||0}
+  for(const v of S.vouchers){if(filter&&!filter(v))continue;get(v.coll)[v.method==="cash"?"cash":"jaib"][v.cur]+=+v.amount||0}
+  return m}
+function cls(v){return Math.abs(v)<=tol()?"zero":v>0?"pos":"neg"}
+function explain(diff,cash){if(Math.abs(diff)<=tol())return ['<span class="chip good">مطابق</span>',""];
+  if(diff>0){const hint=cash>=diff-tol()?" — على الأرجح أُدخلت نقدياً":"";return ['<span class="chip warn">السيستم أقل</span>',`ناقص ${fmt(diff)}${hint}`]}
+  return ['<span class="chip bad">السيستم أكثر</span>',`زائد ${fmt(-diff)} عن الكشف`]}
+const days=(a,b)=>Math.round((new Date(b)-new Date(a))/86400000);
+
+// ---------- rendering ----------
+function collOptions(sel,first){const cur=sel.value;sel.innerHTML=(first!=null?`<option value="">${first}</option>`:"")+S.colls.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");if([...sel.options].some(o=>o.value===cur))sel.value=cur}
+function tile(cur,rows){return `<div class="tile"><div class="cur">${CURN[cur]} <span class="lbl">(${cur})</span></div>${rows.map(([l,v,c])=>`<div class="row"><span class="lbl">${l}</span><b class="num ${c||""}">${fmt(v)}</b></div>`).join("")}</div>`}
+function activeCurs(m){const used=new Set();for(const id in m)for(const c of CURS)if(m[id].actual[c]||m[id].jaib[c]||m[id].cash[c])used.add(c);return CURS.filter(c=>used.has(c))}
+
+function renderOverview(){
+  const m=aggregate();const curs=activeCurs(m);
+  const tot={actual:zero(),jaib:zero(),cash:zero()};for(const id in m)for(const c of CURS){tot.actual[c]+=m[id].actual[c];tot.jaib[c]+=m[id].jaib[c];tot.cash[c]+=m[id].cash[c]}
+  $("ovTiles").innerHTML=(curs.length?curs:["YER"]).map(c=>tile(c,[["وارد كشف جيب",tot.actual[c]],["في سيستم البرج جيب",tot.jaib[c]],["في سيستم البرج نقدي",tot.cash[c]],["الفرق (الكشف − السيستم)",tot.actual[c]-tot.jaib[c],cls(tot.actual[c]-tot.jaib[c])],["النقد الفعلي لدى المحصلين",cashDue(()=>true)[c]]])).join("");
+  const ids=[...S.colls.map(c=>c.id).filter(id=>m[id]),...(m[""]?[""]:[])];
+  if(!ids.length){$("ovTable").innerHTML="";$("ovDecision").innerHTML='<div class="empty">لا توجد بيانات بعد. ابدأ باستيراد كشف محفظة جيب ثم سجّل ما يظهر في حسابات المحصلين في سيستم البرج.</div>';return}
+  const hdr=`<thead><tr><th>المحصل</th>${curs.map(c=>`<th class="num">كشف جيب ${c}</th><th class="num">السيستم جيب ${c}</th><th class="num">السيستم نقدي ${c}</th><th class="num">الفرق ${c}</th>`).join("")}<th>الحالة</th></tr></thead>`;
+  const rows=ids.map(id=>{const x=m[id];const diffs=curs.map(c=>x.actual[c]-x.jaib[c]);const st=diffs.some(d=>d>tol())?"warn":diffs.some(d=>d<-tol())?"bad":"good";
+    const chip=id===""?'<span class="chip mute">غير منسوب لمحصل</span>':st==="good"?'<span class="chip good">مطابق</span>':st==="warn"?'<span class="chip warn">السيستم أقل من الكشف</span>':'<span class="chip bad">السيستم أكثر من الكشف</span>';
+    return `<tr><td>${esc(collName(id))}</td>${curs.map((c,i)=>`<td class="num">${fmt(x.actual[c])}</td><td class="num">${fmt(x.jaib[c])}</td><td class="num">${fmt(x.cash[c])}</td><td class="num ${cls(diffs[i])}">${fmt(diffs[i])}</td>`).join("")}<td>${chip}</td></tr>`}).join("");
+  const trow=`<tr class="total"><td>الإجمالي</td>${curs.map(c=>`<td class="num">${fmt(tot.actual[c])}</td><td class="num">${fmt(tot.jaib[c])}</td><td class="num">${fmt(tot.cash[c])}</td><td class="num">${fmt(tot.actual[c]-tot.jaib[c])}</td>`).join("")}<td></td></tr>`;
+  $("ovTable").innerHTML=hdr+`<tbody>${rows}${trow}</tbody>`;
+  // decisions: per collector, count days with discrepancy
+  const items=[];const limit=+S.settings.days||2;
+  for(const c of S.colls){if(!m[c.id])continue;
+    for(const cur of curs){const diff=m[c.id].actual[cur]-m[c.id].jaib[cur];if(Math.abs(diff)<=tol())continue;
+      const dayMap=aggregate(x=>x.coll===c.id||(x.coll||"")===c.id);
+      const badDays=new Set();for(const r of ST())if(r.kind==="in"&&r.coll===c.id&&r.cur===cur)badDays.add(r.date);for(const e of S.entries)if(e.coll===c.id&&e.cur===cur)badDays.add(e.date);for(const v of S.vouchers)if(v.coll===c.id&&v.cur===cur)badDays.add(v.date);
+      let n=0;for(const d of badDays){const dm=aggregate(x=>x.date===d&&x.coll===c.id);const g=dm[c.id];if(g&&Math.abs(g.actual[cur]-g.jaib[cur])>tol())n++}
+      const cash=m[c.id].cash[cur];
+      if(diff>0)items.push({cls:n>=limit?"bad":"warn",t:`${c.name}: حسابه في السيستم أقل من كشف جيب بـ ${fmt(diff)} ${CURN[cur]} (${n} يوم بفرق)`,d:(cash>=diff-tol()?"المبلغ النقدي المُدخل يغطي الفرق، فالأرجح أنه أدخل إيداعات جيب كنقدي — يُصحَّح الإدخال ويُنبَّه المحصل. ":"")+(n>=limit?"تكرر الفرق لأكثر من الحد المسموح — يلزم استدعاء المحصل ومراجعة نقطته.":"يُراجع مع المحصل قبل إقفال اليوم.")});
+      else items.push({cls:"bad",t:`${c.name}: حسابه في السيستم أكثر من كشف جيب بـ ${fmt(-diff)} ${CURN[cur]} (${n} يوم بفرق)`,d:"تحقق من إدخال مكرر، أو عملية جيب لنقطة أخرى، أو كشف ناقص لهذا اليوم."});
+      void dayMap}}
+  if(m[""]){for(const cur of curs)if(m[""].actual[cur])items.push({cls:"warn",t:`حوالات واردة في جيب لم يُثبتها أي محصل في السيستم: ${fmt(m[""].actual[cur])} ${CURN[cur]}`,d:"تُراجع مع المحصلين لمعرفة صاحب كل حوالة وإثباتها بسند."})}
+  if(!items.length)items.push({cls:"good",t:"جميع المحصلين مطابقون",d:"ما ورد في كشف محفظة جيب يساوي ما يظهر في حساب كل محصل في سيستم البرج ضمن هامش التسامح."});
+  $("ovDecision").innerHTML=items.map(i=>`<div class="item ${i.cls}"><b>${esc(i.t)}</b><span class="note">${esc(i.d)}</span></div>`).join("");
+}
+function renderDaily(){
+  const d=$("dDate").value||today();$("dDate").value=d;const cf=$("dCur").value;
+  $("dTitle").textContent=`مقارنة يوم ${d}`;
+  const m=aggregate(x=>x.date===d);const curs=(cf==="ALL"?activeCurs(m):[cf]);
+  const ids=[...S.colls.map(c=>c.id).filter(id=>m[id]),...(m[""]?[""]:[])];
+  const rows=[];
+  for(const c of curs){const t={a:0,j:0,k:0};let n=0;
+    for(const id of ids){const x=m[id];const a=x.actual[c],j=x.jaib[c],k=x.cash[c];if(!a&&!j&&!k)continue;n++;t.a+=a;t.j+=j;t.k+=k;const diff=a-j;const [chip,why]=id===""?['<span class="chip mute">غير منسوب</span>',""]:explain(diff,k);
+      rows.push(`<tr><td>${esc(collName(id))}</td><td>${CURN[c]}</td><td class="num">${fmt(a)}</td><td class="num">${fmt(j)}</td><td class="num">${fmt(k)}</td><td class="num ${cls(diff)}">${fmt(diff)}</td><td>${chip} <span class="note">${esc(why)}</span></td></tr>`)}
+    if(n>1)rows.push(`<tr class="total"><td>إجمالي ${CURN[c]}</td><td></td><td class="num">${fmt(t.a)}</td><td class="num">${fmt(t.j)}</td><td class="num">${fmt(t.k)}</td><td class="num">${fmt(t.a-t.j)}</td><td></td></tr>`)}
+  $("dTable").innerHTML=`<thead><tr><th>المحصل</th><th>العملة</th><th class="num">وارد كشف جيب</th><th class="num">في السيستم جيب</th><th class="num">في السيستم نقدي</th><th class="num">الفرق</th><th>الحالة</th></tr></thead><tbody>${rows.join("")||'<tr><td colspan="7" class="empty">لا توجد حركة في هذا اليوم.</td></tr>'}</tbody>`;
+  $("dStmt").innerHTML=stmtRows(ST().filter(r=>r.date===d&&(cf==="ALL"||r.cur===cf)),false);
+}
+function stmtRows(list,withDel){
+  list=[...list].sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  if(!list.length)return '<tbody><tr><td class="empty">لا توجد عمليات.</td></tr></tbody>';
+  return `<thead><tr><th>التاريخ</th><th>الوقت</th><th>المحصل</th><th>النقطة</th><th class="num">المبلغ</th><th>العملة</th><th>الدافع</th><th>رقم العملية</th><th>المرجع</th><th>نوع العملية</th>${withDel?"<th></th>":""}</tr></thead><tbody>${list.map(r=>`<tr><td class="num">${esc(r.date)}</td><td class="num">${esc(r.time)}</td><td>${esc(collName(r.coll))}</td><td class="codes">${esc(r.code||"—")}</td><td class="num ${r.kind==="out"?"neg":""}">${fmt(r.amount)}</td><td>${CURN[r.cur]||esc(r.cur)}</td><td class="t">${esc(r.payer||r.desc.slice(0,60))}</td><td class="codes">${esc(r.opNo||"")}</td><td class="codes">${esc(r.id)}</td><td class="t">${esc(r.op)}</td>${withDel?`<td><button class="sm danger" data-del="stmt:${esc(r.id)}">حذف</button></td>`:""}</tr>`).join("")}</tbody>`;
+}
+function renderStmt(){
+  collOptions($("sColl"),"الكل");const from=$("sFrom").value,to=$("sTo").value,coll=$("sColl").value,kind=$("sKind").value;
+  const list=ST().filter(r=>(!from||r.date>=from)&&(!to||r.date<=to)&&(!coll||r.coll===coll)&&(kind==="all"||r.kind===kind));
+  $("stmtTable").innerHTML=stmtRows(list.slice(-300),true);
+}
+function renderEntries(){
+  collOptions($("eColl"),"— اختر المحصل —");if(!$("eDate").value)$("eDate").value=today();
+  const rows=[...S.entries].sort((a,b)=>b.date.localeCompare(a.date)||(b.ts||0)-(a.ts||0)).slice(0,80);
+  $("eTable").innerHTML=rows.length?`<thead><tr><th>التاريخ</th><th>المحصل</th><th>العملة</th><th class="num">نقدي</th><th class="num">جيب</th><th class="num">الإجمالي</th><th>ملاحظة</th><th></th></tr></thead><tbody>${rows.map(e=>`<tr><td class="num">${esc(e.date)}</td><td>${esc(collName(e.coll))}</td><td>${CURN[e.cur]}</td><td class="num">${fmt(e.cash)}</td><td class="num">${fmt(e.jaib)}</td><td class="num">${fmt((+e.cash||0)+(+e.jaib||0))}</td><td class="t">${esc(e.note||"")}</td><td><button class="sm danger" data-del="entries:${esc(e.id)}">حذف</button></td></tr>`).join("")}</tbody>`:'<tbody><tr><td class="empty">لم تُسجَّل إدخالات بعد.</td></tr></tbody>';
+}
+function renderRep(){
+  collOptions($("rColl"),"— اختر المحصل —");const id=$("rColl").value,from=$("rFrom").value,to=$("rTo").value;
+  if(!id){$("rTiles").innerHTML="";$("rHeadCard").hidden=true;$("rDays").innerHTML='<tbody><tr><td class="empty">اختر محصلاً.</td></tr></tbody>';$("rTx").innerHTML="";return}
+  const inR=x=>x.coll===id&&(!from||x.date>=from)&&(!to||x.date<=to);
+  const m=aggregate(inR);const g=m[id]||{actual:zero(),jaib:zero(),cash:zero()};const curs=activeCurs(m);
+  $("rTiles").innerHTML=curs.map(c=>tile(c,[["وارد كشف جيب",g.actual[c]],["في السيستم جيب",g.jaib[c]],["في السيستم نقدي",g.cash[c]],["الفرق",g.actual[c]-g.jaib[c],cls(g.actual[c]-g.jaib[c])],["النقد الفعلي المطلوب منه",cashDue(inR)[c]]])).join("")||'<div class="empty">لا توجد حركة في هذه الفترة.</div>';
+  const dset=new Set();for(const r of ST())if(r.kind==="in"&&inR(r))dset.add(r.date+"|"+r.cur);for(const e of S.entries)if(inR(e))dset.add(e.date+"|"+e.cur);for(const v of S.vouchers)if(inR(v))dset.add(v.date+"|"+v.cur);
+  const keys=[...dset].sort();
+  $("rDays").innerHTML=keys.length?`<thead><tr><th>اليوم</th><th>العملة</th><th class="num">عدد العمليات</th><th class="num">وارد كشف جيب</th><th class="num">في السيستم جيب</th><th class="num">في السيستم نقدي</th><th class="num">الفرق</th><th>الحالة</th></tr></thead><tbody>${keys.map(k=>{const [d,c]=k.split("|");const dm=aggregate(x=>x.date===d&&x.coll===id&&x.cur===c)[id]||{actual:zero(),jaib:zero(),cash:zero()};const n=ST().filter(r=>r.kind==="in"&&r.coll===id&&r.date===d&&r.cur===c).length;const diff=dm.actual[c]-dm.jaib[c];const [chip,why]=explain(diff,dm.cash[c]);
+    return `<tr><td class="num">${d}</td><td>${CURN[c]}</td><td class="num">${n}</td><td class="num">${fmt(dm.actual[c])}</td><td class="num">${fmt(dm.jaib[c])}</td><td class="num">${fmt(dm.cash[c])}</td><td class="num ${cls(diff)}">${fmt(diff)}</td><td>${chip} <span class="note">${esc(why)}</span></td></tr>`}).join("")}</tbody>`:'<tbody><tr><td class="empty">لا توجد حركة.</td></tr></tbody>';
+  const cn=collName(id);$("rHeadCard").hidden=false;$("rHead").textContent=`برج الفؤاد الطبي — كشف حساب المحصل: ${cn}`;$("rHeadSub").textContent=`الفترة: ${from||"من البداية"} إلى ${to||today()} — تاريخ الإصدار: ${today()}`;
+  const ST_TXT={ok:["good","تحويل مطابق"],c2j:["warn","مُدخل نقدي وهو تحويل"],cash:["mute","نقدي فعلي"],less:["warn","السيستم أقل"],more:["bad","السيستم أكثر"],vonly:["bad","غير موجودة في جيب"],jonly:["warn","في جيب ولم تُثبت"]};
+  const L=(S.M?S.M.rows:[]).filter(r=>r.coll===id&&(!from||r.date>=from)&&(!to||r.date<=to)).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  const tt={};const body=L.map((r,i)=>{const sys=r.v?+r.v.amount:0,jb=r.j?+r.j.amount:0;const t=tt[r.cur]||(tt[r.cur]={sys:0,jb:0,due:0});t.sys+=sys;t.jb+=jb;if(r.v)t.due+=sys-jb;const [c,txt]=ST_TXT[r.st];const d=r.st==="cash"?"":fmt(jb-sys);
+    return `<tr><td>${i+1}</td><td class="num">${esc(r.date)}</td><td class="num">${esc(r.time)}</td><td class="codes">${esc(r.v?(r.v.no||""):"")}</td><td class="t">${esc(r.v&&r.v.note?r.v.note:(r.j?(r.j.payer||""):""))}</td><td>${r.v?(r.v.method==="cash"?"نقدي":"جيب"):"—"}</td><td>${CURN[r.cur]}</td><td class="num">${r.v?fmt(sys):"—"}</td><td class="num">${r.j?fmt(jb):"—"}</td><td class="num ${d&&Math.abs(jb-sys)>tol()?(jb>sys?"pos":"neg"):""}">${d}</td><td><span class="chip ${c}">${txt}</span></td></tr>`}).join("");
+  const foot=Object.keys(tt).map(c=>`<tr class="total"><td colspan="6">إجمالي ${CURN[c]}</td><td></td><td class="num">${fmt(tt[c].sys)}</td><td class="num">${fmt(tt[c].jb)}</td><td class="num">${fmt(tt[c].jb-tt[c].sys)}</td><td>النقد الفعلي المطلوب: <span class="num">${fmt(tt[c].due)}</span></td></tr>`).join("");
+  $("rTx").innerHTML=L.length?`<thead><tr><th>#</th><th>التاريخ</th><th>الوقت</th><th>رقم السند</th><th>البيان / الدافع</th><th>مُدخل كـ</th><th>العملة</th><th class="num">مبلغ السيستم</th><th class="num">مبلغ جيب</th><th class="num">الفرق</th><th>الحالة</th></tr></thead><tbody>${body}${foot}</tbody>`:'<tbody><tr><td class="empty">لا توجد حركة لهذا المحصل في الفترة.</td></tr></tbody>';
+}
+function renderSetup(){
+  $("collTable").innerHTML=S.colls.length?`<thead><tr><th>الاسم</th><th>النقاط</th><th>أسماء أخرى</th><th></th></tr></thead><tbody>${S.colls.map(c=>`<tr><td>${esc(c.name)}</td><td class="codes">${esc((c.codes||[]).join(", "))}</td><td class="t">${esc((c.aliases||[]).join("، "))}</td><td><button class="sm danger" data-del="collectors:${esc(c.id)}">حذف</button></td></tr>`).join("")}</tbody>`:'<tbody><tr><td class="empty">لم يُضَف محصلون بعد — يُنشَؤون تلقائياً عند استيراد أول كشف.</td></tr></tbody>';
+  if(document.activeElement?.form!==$("setForm")){$("tol").value=S.settings.tol??"";$("days").value=S.settings.days??""}
+}
+function renderAll(){localSave();S.M=matchAll();renderOverview();renderDaily();renderStmt();renderEntries();renderVouchers();renderMatch();renderRep();renderSetup();renderReview()}
+
+// ---------- system vouchers & transaction matching ----------
+function renderVouchers(){
+  collOptions($("vColl"),"— اختر المحصل —");collOptions($("xColl"),"— اختر المحصل —");if(!$("vDate").value)$("vDate").value=today();
+  const rows=[...S.vouchers].sort((a,b)=>b.date.localeCompare(a.date)||(b.ts||0)-(a.ts||0)).slice(0,150);
+  $("vTable").innerHTML=rows.length?`<thead><tr><th>التاريخ</th><th>الوقت</th><th>المحصل</th><th>رقم السند</th><th>مُدخل كـ</th><th class="num">المبلغ</th><th>العملة</th><th>البيان</th><th></th></tr></thead><tbody>${rows.map(v=>`<tr><td class="num">${esc(v.date)}</td><td class="num">${esc(v.time||"")}</td><td>${esc(collName(v.coll))}</td><td class="codes">${esc(v.no||"")}</td><td>${v.method==="cash"?"نقدي":"جيب"}</td><td class="num">${fmt(v.amount)}</td><td>${CURN[v.cur]}</td><td class="t">${esc(v.note||"")}</td><td><button class="sm danger" data-del="vouchers:${esc(v.id)}">حذف</button></td></tr>`).join("")}</tbody>`:'<tbody><tr><td class="empty">لم تُسجَّل سندات بعد.</td></tr></tbody>';
+}
+$("vForm").addEventListener("submit",async e=>{e.preventDefault();const coll=$("vColl").value;if(!coll){toast("اختر المحصل أولاً");return}
+  const amount=+$("vAmt").value||0;if(!amount){toast("أدخل المبلغ");return}
+  const no=$("vNo").value.trim();if(no&&S.vouchers.some(v=>v.no===no&&v.coll===coll)){toast("رقم السند مسجل مسبقاً لهذا المحصل");return}
+  try{await save("vouchers",uid(),{date:$("vDate").value,time:$("vTime").value,coll,cur:$("vCur").value,method:$("vMethod").value,amount,no,note:$("vNote").value.trim(),ts:Date.now()});
+    $("vAmt").value="";$("vNo").value="";$("vNote").value="";$("vTime").value="";$("vTime").focus();toast("أُضيف السند")}catch{toast("تعذر الحفظ")}});
+const mins=t=>{const m=/^(\d{1,2}):(\d{2})/.exec(t||"");return m?(+m[1])*60+(+m[2]):null};
+const tdiff=(a,b)=>{const x=mins(a),y=mins(b);return x==null||y==null?0:Math.abs(x-y)};
+function nameHit(note,payer){const p=norm(payer);return norm(note).split(" ").filter(t=>t.length>=3).some(t=>p.includes(t))}
+function matchAll(){
+  const J=S.stmt.filter(r=>r.kind==="in"),V=S.vouchers;const uj=new Set(),uv=new Set(),rows=[],eff=new Map();
+  const order=[...V].sort((a,b)=>a.date.localeCompare(b.date)||(a.time||"").localeCompare(b.time||""));
+  const isCash=v=>v.method==="cash";const hit=(v,j)=>!!v.note&&nameHit(v.note,j.payer||j.desc);const near=(v,j)=>mins(v.time)!=null&&tdiff(j.time,v.time)<=30;
+  const pick=(v,ok)=>{let best=null,bs=1e9;for(const j of J){if(uj.has(j.id)||j.date!==v.date||j.cur!==v.cur||!ok(j))continue;const s=tdiff(j.time,v.time)+(j.coll&&j.coll!==v.coll?300:0)-(hit(v,j)?500:0);if(s<bs){bs=s;best=j}}return best};
+  const take=(v,j,st)=>{uj.add(j.id);uv.add(v.id);eff.set(j.id,v.coll);rows.push({j,v,st})};
+  const same=(v,j)=>Math.abs(j.amount-v.amount)<=tol();
+  for(const v of order){if(isCash(v))continue;const j=pick(v,j=>same(v,j));if(j)take(v,j,"ok")}
+  for(const v of order){if(!isCash(v))continue;const j=pick(v,j=>same(v,j)&&(hit(v,j)||near(v,j)||(mins(v.time)==null&&!v.note)));if(j)take(v,j,"c2j")}
+  for(const v of order){if(uv.has(v.id)||isCash(v))continue;const j=pick(v,j=>hit(v,j)||(near(v,j)&&(!j.coll||j.coll===v.coll)));if(j)take(v,j,v.amount<j.amount?"less":"more")}
+  for(const j of J)if(!uj.has(j.id))rows.push({j,v:null,st:"jonly"});
+  for(const v of V)if(!uv.has(v.id))rows.push({j:null,v,st:isCash(v)?"cash":"vonly"});
+  for(const r of rows){r.coll=r.v?r.v.coll:(r.j.coll||"");r.date=(r.j||r.v).date;r.time=(r.j||r.v).time||"";r.cur=(r.j||r.v).cur}
+  return {rows,stmt:S.stmt.map(r=>eff.has(r.id)&&eff.get(r.id)!==r.coll?{...r,coll:eff.get(r.id)}:r)}}
+const ST=()=>S.M?S.M.stmt:S.stmt;
+function cashDue(f){const o=zero();for(const r of (S.M?S.M.rows:[])){if(!r.v||!f(r))continue;o[r.cur]+=(+r.v.amount||0)-(r.j?+r.j.amount||0:0)}for(const e of S.entries)if(f(e))o[e.cur]+=+e.cash||0;return o}
+function renderMatch(){
+  collOptions($("mColl"),"كل المحصلين");const id=$("mColl").value,from=$("mFrom").value,to=$("mTo").value,show=$("mShow").value;
+  let rows=(S.M?S.M.rows:[]).filter(r=>(!id||r.coll===id)&&(!from||r.date>=from)&&(!to||r.date<=to));
+  rows.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  const n={ok:0,less:0,more:0,jonly:0,vonly:0,c2j:0,cash:0};for(const r of rows)n[r.st]++;
+  $("mSummary").innerHTML=rows.length?`<span class="chip good">مطابق: ${n.ok}</span><span class="chip warn">مُدخل نقدي وهو تحويل: ${n.c2j}</span><span class="chip mute">نقدي فعلي: ${n.cash}</span><span class="chip warn">السيستم أقل: ${n.less}</span><span class="chip bad">السيستم أكثر: ${n.more}</span><span class="chip warn">في جيب ولم يُثبتها محصل: ${n.jonly}</span><span class="chip bad">في السيستم وغير موجودة في جيب: ${n.vonly}</span>`:"";
+  if(show==="bad")rows=rows.filter(r=>r.st!=="ok"&&r.st!=="cash");
+  const chip=r=>r.st==="ok"?'<span class="chip good">مطابق</span>':r.st==="c2j"?'<span class="chip warn">مُدخل نقدي وهو تحويل جيب</span>':r.st==="cash"?'<span class="chip mute">نقدي فعلي</span>':r.st==="less"?`<span class="chip warn">السيستم أقل بـ ${fmt(r.j.amount-r.v.amount)}</span>`:r.st==="more"?`<span class="chip bad">السيستم أكثر بـ ${fmt(r.v.amount-r.j.amount)}</span>`:r.st==="jonly"?'<span class="chip warn">في جيب ولم يُثبتها محصل</span>':'<span class="chip bad">في السيستم وغير موجودة في جيب</span> <span class="note">أو أثبتها محصل آخر قبله</span>';
+  $("mTable").innerHTML=rows.length?`<thead><tr><th>التاريخ</th><th>الحالة</th><th>المحصل</th><th>العملة</th><th>وقت جيب</th><th class="num">مبلغ جيب</th><th>الدافع في جيب</th><th>وقت السيستم</th><th class="num">مبلغ السيستم</th><th>مُدخل كـ</th><th>رقم السند</th><th>بيان السيستم</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="num">${esc(r.date)}</td><td>${chip(r)}</td><td>${esc(collName(r.coll))}</td><td>${CURN[r.cur]}</td><td class="num">${esc(r.j?r.j.time:"—")}</td><td class="num">${r.j?fmt(r.j.amount):"—"}</td><td class="t">${esc(r.j?(r.j.payer||r.j.desc.slice(0,60)):"")}</td><td class="num">${esc(r.v?(r.v.time||""):"—")}</td><td class="num">${r.v?fmt(r.v.amount):"—"}</td><td>${r.v?(r.v.method==="cash"?"نقدي":"جيب"):"—"}</td><td class="codes">${esc(r.v?(r.v.no||""):"")}</td><td class="t">${esc(r.v?(r.v.note||""):"")}</td></tr>`).join("")}</tbody>`:'<tbody><tr><td class="empty">لا توجد عمليات. استورد كشف جيب وأدخل سندات المحصل من السيستم.</td></tr></tbody>';
+}
+["mColl","mFrom","mTo","mShow"].forEach(id=>$(id).addEventListener("change",renderMatch));
+
+$("btnPrint").addEventListener("click",()=>{if(!$("rColl").value){toast("اختر المحصل أولاً");return}window.print()});
+
+// ---------- collector file import ----------
+const AR_DIG={"٠":"0","١":"1","٢":"2","٣":"3","٤":"4","٥":"5","٦":"6","٧":"7","٨":"8","٩":"9","۰":"0","۱":"1","۲":"2","۳":"3","۴":"4","۵":"5","۶":"6","۷":"7","۸":"8","۹":"9","٫":".","٬":","};
+const latin=s=>String(s??"").normalize("NFKC").replace(/[٠-٩۰-۹٫٬]/g,c=>AR_DIG[c]).replace(/[‎‏‪-‮]/g,"");
+const DATE_RE=/(\d{1,2})\s*[\/\-.]\s*(\d{1,2})\s*[\/\-.]\s*(\d{4})|(\d{4})\s*[\/\-.]\s*(\d{1,2})\s*[\/\-.]\s*(\d{1,2})/g;
+const TIME_RE=/(?:\b(AM|PM)\s*)?(\d{1,2})\s*:\s*(\d{2})(?:\s*:\s*\d{2})?(?:\s*(AM|PM|ص|م)(?![\u0621-\u064A]))?/i;
+const AMT_RE=/\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d+\.\d{2}/;
+const pad=n=>String(n).padStart(2,"0");
+function dateCands(m){if(m[3])return [[+m[3],+m[2],+m[1]],[+m[3],+m[1],+m[2]]];return [[+m[4],+m[5],+m[6]],[+m[4],+m[6],+m[5]]]}
+const okDate=([y,mo,d])=>y>2000&&mo>=1&&mo<=12&&d>=1&&d<=31;
+const fmtD=([y,mo,d])=>`${y}-${pad(mo)}-${pad(d)}`;
+function pickDate(m,months){const c=dateCands(m).filter(okDate);if(!c.length)return "";if(c.length>1&&months){const f=c.find(x=>months.has(`${x[0]}-${x[1]}`));if(f)return fmtD(f)}return fmtD(c[0])}
+function to24(m){if(!m)return "";let h=+m[2];const mi=+m[3];const ap=(m[4]||m[1]||"").toUpperCase();if((ap==="PM"||ap==="م")&&h<12)h+=12;if((ap==="AM"||ap==="ص")&&h===12)h=0;return h<24&&mi<60?`${pad(h)}:${pad(mi)}`:""}
+const amtNum=s=>Number(String(s).replace(/,/g,""))||0;
+function curOf(s){s=String(s||"");if(/USD|\$|دولار/i.test(s))return "USD";if(/EUR|€|يورو/i.test(s))return "EUR";if(/\bSR\b|\bRS\b|SAR|سعود|ر\.?\s?س/i.test(s))return "SAR";return "YER"}
+const STOP=new Set(["سند","خدمة","خدمه","نقدي","نقدى","محفظة","محفظه","جيب","سداد","المبالغ","المعلقة","المعلقه","RY","ريال","يمني"]);
+function cleanNote(s,common){return (String(s||"").match(/[ء-ي]{2,}/g)||[]).filter(w=>!STOP.has(w)&&!common.has(w)).slice(0,8).join(" ")}
+function commonWords(chunks){const cnt=new Map();for(const c of chunks)for(const w of new Set(String(c).match(/[ء-ي]{2,}|\d{2,}/g)||[]))cnt.set(w,(cnt.get(w)||0)+1);const out=new Set();if(chunks.length>=3)for(const [w,n] of cnt)if(n>=Math.max(3,chunks.length*0.6))out.add(w);return out}
+function monthsOf(text){const s=new Map();for(const m of latin(text).matchAll(DATE_RE)){const c=dateCands(m).filter(okDate);if(c.length===1||(c.length===2&&c[0][1]===c[1][1])){const k=`${c[0][0]}-${c[0][1]}`;s.set(k,(s.get(k)||0)+1)}}return new Set([...s.keys()])}
+function parseTables(tables){const out=[];
+  for(const t of tables||[]){let hi=-1,map={};
+    for(let i=0;i<Math.min(t.length,15);i++){const r=t[i].map(c=>latin(c));if(r.some(c=>/التاريخ/.test(c))&&r.some(c=>/المدين|المبلغ|القيمة/.test(c))){hi=i;
+      r.forEach((c,j)=>{const set=(k,re)=>{if(map[k]===undefined&&re.test(c))map[k]=j};set("date",/التاريخ/);set("user",/المستخدم/);set("file",/بيانات الملف|المريض|الملف/);set("no",/رقم السند/);set("type",/نوع السند/);set("acct",/بيانات الحساب|نقطة|الحساب/);set("desc",/البيان|تفاصيل|ملاحظات/);set("cur",/العملة/);set("amt",/المدين|المبلغ|القيمة/)});break}}
+    if(hi<0)continue;
+    const body=t.slice(hi+1).map(r=>r.map(c=>latin(c)));const months=monthsOf(body.map(r=>r[map.date]||"").join(" "));
+    const common=commonWords(body.filter(r=>r[map.date]).map(r=>[r[map.user],r[map.acct],r[map.type]].join(" ")));
+    for(const r of body){const dcell=r[map.date]||"";const dm=[...dcell.matchAll(DATE_RE)][0];if(!dm)continue;const a=AMT_RE.exec(r[map.amt]||"")||/\d+(\.\d+)?/.exec(r[map.amt]||"");const amount=a?amtNum(a[0]):0;if(!amount)continue;
+      const all=r.join(" ");
+      out.push({date:pickDate(dm,months),time:to24(TIME_RE.exec(dcell.replace(dm[0]," "))),amount,cur:curOf(r[map.cur]),method:/جيب/.test(all)?"jaib":"cash",no:((r[map.no]||"").match(/\d{2,}/)||[""])[0],note:cleanNote([r[map.desc],r[map.file]].join(" "),common)})}}
+  return out}
+function parseText(text){text=latin(text);const out=[];const months=monthsOf(text);
+  const ms=[...text.matchAll(DATE_RE)];const segs=[];
+  ms.forEach((m,i)=>{let s=text.slice(m.index+m[0].length,i<ms.length-1?ms[i+1].index:text.length);const cut=s.search(/اجمالي|إجمالي|اجـ|الرصيد/);if(cut>=0)s=s.slice(0,cut);segs.push({m,s})});
+  const withAmt=segs.filter(x=>AMT_RE.test(x.s));const common=commonWords(withAmt.map(x=>x.s));
+  for(const {m,s} of withAmt){const tm=TIME_RE.exec(s);let rest=tm?s.replace(tm[0]," "):s;const a=AMT_RE.exec(rest);const amount=amtNum(a[0]);if(!amount)continue;rest=rest.replace(a[0]," ");
+    let no="";const nums=[...rest.matchAll(/(?<![\d.,])\d{3,6}(?![\d.,])/g)].filter(x=>!common.has(x[0])).filter(x=>{const af=rest.slice(x.index+x[0].length).trimStart(),bf=rest.slice(0,x.index).trimEnd();return !((/^[\u0621-\u064A]/.test(af)&&!/^سند/.test(af))||(/[\u0621-\u064A]$/.test(bf)&&!/سند$/.test(bf)))});
+    no=(nums.find(x=>/سند/.test(rest.slice(Math.max(0,x.index-18),x.index+x[0].length+18)))||nums[0]||[""])[0];
+    out.push({date:pickDate(m,months),time:to24(tm),amount,cur:curOf(s),method:/جيب/.test(s)?"jaib":"cash",no,note:cleanNote(rest,common)})}
+  return out}
+function guessColl(text){const t=norm(latin(text));let best="",bs=0;const gen=new Set(["عبد","محمد","احمد","علي","عبدالله"]);
+  for(const c of S.colls){const toks=norm(c.name).split(" ").filter(w=>w.length>=3&&!gen.has(w));if(!toks.length)continue;const sc=toks.filter(w=>t.includes(w)).length/toks.length;if(sc>bs){bs=sc;best=c.id}}return bs>=0.5?best:""}
+async function pdfText(file){const lib=window.pdfjsLib||(window.pdfjsReady?await window.pdfjsReady:null);if(!lib)return "";
+  const pdf=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false}).promise;let out="";
+  for(let p=1;p<=pdf.numPages;p++){const page=await pdf.getPage(p);const vp=page.getViewport({scale:1});const tc=await page.getTextContent();
+    const items=tc.items.filter(i=>i.str&&i.str.trim()).map(i=>({s:i.str,x:i.transform[4],y:vp.height-i.transform[5],w:i.width||0})).sort((a,b)=>a.y-b.y);
+    const lines=[];for(const it of items){const L=lines[lines.length-1];if(L&&Math.abs(L.y-it.y)<=3)L.items.push(it);else lines.push({y:it.y,items:[it]})}
+    for(const L of lines){L.items.sort((a,b)=>b.x-a.x);let s="";L.items.forEach((it,i)=>{if(i){const pv=L.items[i-1];const gap=pv.x-(it.x+it.w);s+=gap>6?"  ":gap>1.2?" ":""}s+=it.s});out+=s+"\n"}}
+  return out}
+function shrinkImage(file){return new Promise(res=>{const img=new Image();img.onload=()=>{const k=Math.min(1,2400/Math.max(img.width,img.height));const c=document.createElement("canvas");c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext("2d").drawImage(img,0,0,c.width,c.height);c.toBlob(b=>res(b||file),"image/jpeg",0.92)};img.onerror=()=>res(file);img.src=URL.createObjectURL(file)})}
+const b64=blob=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]);r.onerror=rej;r.readAsDataURL(blob)});
+async function serverRead(file,blob,mime){const d=await call("extractFile",S.token,file.name,mime,await b64(blob));return d}
+async function readCollectorFile(file){
+  const isPdf=file.type==="application/pdf"||/\.pdf$/i.test(file.name),isImg=file.type.startsWith("image/");
+  let text="",tables=[];
+  if(isPdf){text=await pdfText(file);if((latin(text).match(/\d/g)||[]).length<30){const d=await serverRead(file,file,"application/pdf");text=d.text;tables=d.tables}}
+  else if(isImg){const blob=await shrinkImage(file);const d=await serverRead(file,blob,blob.type||"image/jpeg");text=d.text;tables=d.tables}
+  else{const d=await serverRead(file,file,file.type||"application/octet-stream");text=d.text;tables=d.tables}
+  let rows=parseTables(tables);if(!rows.length){const tt=(tables||[]).map(t=>t.map(r=>r.join("  ")).join("\n")).join("\n");rows=parseText(text||tt);if(!rows.length&&text&&tt)rows=parseText(tt)}
+  return {rows,text:text+"\n"+(tables||[]).map(t=>t.map(r=>r.join(" ")).join("\n")).join("\n")}}
+S.xrev=[];
+function vDup(r,coll){return S.vouchers.some(v=>v.coll===coll&&v.date===r.date&&v.cur===r.cur&&Math.abs((+v.amount||0)-r.amount)<0.01&&((r.no&&v.no)?v.no===r.no:(v.time||"")===(r.time||"")))}
+function renderXReview(){const card=$("xReviewCard");card.hidden=!S.xrev.length;if(!S.xrev.length)return;const coll=$("xColl").value;
+  const sel=S.xrev.filter(r=>r.on&&!vDup(r,coll)).length;$("xNote").textContent=`${S.xrev.length} سند مقروء — ${sel} محدد للحفظ${coll?"":" — اختر المحصل أولاً"}`;
+  $("xTable").innerHTML=`<thead><tr><th>حفظ</th><th>#</th><th>التاريخ</th><th>الوقت</th><th class="num">المبلغ</th><th>العملة</th><th>طريقة الدفع</th><th>رقم السند</th><th>البيان</th><th>الحالة</th></tr></thead><tbody>${S.xrev.map((r,i)=>{const dup=coll&&vDup(r,coll);
+    const st=dup?'<span class="chip mute">مسجل مسبقاً</span>':!r.date||!r.amount?'<span class="chip bad">ناقص</span>':!r.time?'<span class="chip warn">بدون وقت</span>':'<span class="chip good">جاهز</span>';
+    return `<tr data-k="${r.k}"><td><input type="checkbox" data-f="on"${r.on&&!dup?" checked":""}${dup?" disabled":""}></td><td>${i+1}</td><td><input type="date" data-f="date" value="${esc(r.date)}"></td><td><input type="time" data-f="time" value="${esc(r.time)}"></td><td><input type="number" step="0.01" data-f="amount" value="${r.amount||""}"></td><td><select data-f="cur">${CURS.map(c=>`<option value="${c}"${c===r.cur?" selected":""}>${c}</option>`).join("")}</select></td><td><select data-f="method"><option value="jaib"${r.method==="jaib"?" selected":""}>جيب</option><option value="cash"${r.method==="cash"?" selected":""}>نقدي</option></select></td><td><input class="no" type="text" data-f="no" value="${esc(r.no)}"></td><td><input class="nt" type="text" data-f="note" value="${esc(r.note)}"></td><td>${st}</td></tr>`}).join("")}</tbody>`}
+$("xTable").addEventListener("change",e=>{const tr=e.target.closest("tr");const r=S.xrev.find(x=>x.k===tr?.dataset.k);const f=e.target.dataset.f;if(!r||!f)return;r[f]=f==="on"?e.target.checked:f==="amount"?(+e.target.value||0):e.target.value;renderXReview()});
+$("xColl").addEventListener("change",renderXReview);
+async function handleXFiles(list){const files=[...list];if(!files.length)return;let all=[],txt="";
+  for(const [i,f] of files.entries()){$("xStatus").textContent=`جارٍ قراءة ${f.name} (${i+1}/${files.length})…`;
+    try{const r=await readCollectorFile(f);all.push(...r.rows);txt+=r.text+"\n"}catch(e){const m=e.message||"";toast(m==="DRIVE_DISABLED"?"قراءة الصور وملفات Word/Excel تحتاج تفعيل خدمة Drive في Apps Script — راجع دليل التثبيت":`تعذر قراءة ${f.name}: ${m}`)}}
+  if(!$("xColl").value){const g=guessColl(txt);if(g)$("xColl").value=g}
+  const seen=new Set();S.xrev=all.filter(r=>{const k=[r.date,r.time,r.amount,r.no].join("|");if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time)).map(r=>({...r,k:uid(),on:true}));
+  const sum={};for(const r of S.xrev)sum[r.cur]=(sum[r.cur]||0)+r.amount;
+  $("xStatus").textContent=S.xrev.length?`قُرئ ${S.xrev.length} سند — الإجمالي: ${Object.entries(sum).map(([c,v])=>fmt(v)+" "+CURN[c]).join("، ")}. قارنه بإجمالي الكشف قبل الحفظ.`:"لم يُعثر على سندات في الملف. إن كانت صورة فحاول صورة أوضح ومستقيمة، أو أدخل السندات يدوياً.";
+  renderXReview()}
+$("xFiles").addEventListener("change",()=>{handleXFiles($("xFiles").files);$("xFiles").value=""});
+$("btnXCam").addEventListener("click",()=>$("xCam").click());
+$("xCam").addEventListener("change",()=>{handleXFiles($("xCam").files);$("xCam").value=""});
+$("xDrop").addEventListener("dragover",e=>{e.preventDefault();$("xDrop").classList.add("over")});$("xDrop").addEventListener("dragleave",()=>$("xDrop").classList.remove("over"));
+$("xDrop").addEventListener("drop",e=>{e.preventDefault();$("xDrop").classList.remove("over");handleXFiles(e.dataTransfer.files)});
+$("btnXClear").addEventListener("click",()=>{S.xrev=[];$("xStatus").textContent="";renderXReview()});
+$("btnXSave").addEventListener("click",async()=>{const coll=$("xColl").value;if(!coll){toast("اختر المحصل صاحب الكشف");return}
+  const rows=S.xrev.filter(r=>r.on&&!vDup(r,coll)&&r.date&&r.amount>0).map(r=>({id:uid(),date:r.date,time:r.time,coll,cur:r.cur,method:r.method,amount:r.amount,no:r.no,note:r.note,ts:Date.now()}));
+  if(!rows.length){toast("لا توجد سندات جديدة مكتملة");return}
+  $("btnXSave").disabled=true;try{await saveMany("vouchers",rows);toast(`حُفظ ${rows.length} سند`);S.xrev=S.xrev.filter(r=>!(r.on&&r.date&&r.amount>0));$("xStatus").textContent="";renderXReview()}catch(e){toast("تعذر الحفظ: "+e.message)}finally{$("btnXSave").disabled=false}});
+
+// ---------- routing ----------
+const VIEWS=["overview","daily","match","stmt","entries","rep","setup"];
+function route(){let v=location.hash.replace("#","");if(!VIEWS.includes(v))v="overview";for(const x of VIEWS)$("v-"+x).hidden=x!==v;document.querySelectorAll("#tabs a").forEach(a=>a.classList.toggle("active",a.dataset.v===v))}
+window.addEventListener("hashchange",route);route();
+
+// ---------- forms ----------
+$("eForm").addEventListener("submit",async e=>{e.preventDefault();const coll=$("eColl").value;if(!coll){toast("اختر المحصل أولاً");return}
+  const cash=+$("eCash").value||0,jaib=+$("eJaib").value||0;if(!cash&&!jaib){toast("أدخل مبلغاً");return}
+  try{await save("entries",uid(),{date:$("eDate").value,coll,cur:$("eCur").value,cash,jaib,note:$("eNote").value.trim(),ts:Date.now()});$("eCash").value="";$("eJaib").value="";$("eNote").value="";toast("تم حفظ الإدخال")}catch(err){toast("تعذر الحفظ")}});
+$("collForm").addEventListener("submit",async e=>{e.preventDefault();const name=$("collName").value.trim();if(!name)return;
+  const codes=$("collCodes").value.split(/[،,\s]+/).map(s=>s.trim()).filter(Boolean);const aliases=$("collAlias").value.split(/[،,]/).map(s=>s.trim()).filter(Boolean);
+  try{await save("collectors",uid(),{name,codes,aliases,ts:Date.now()});$("collName").value="";$("collCodes").value="";$("collAlias").value="";toast("أُضيف المحصل")}catch(err){toast("تعذر الحفظ")}});
+$("setForm").addEventListener("submit",async e=>{e.preventDefault();S.settings={tol:+$("tol").value||1,days:+$("days").value||2};try{await saveSettings();toast("تم الحفظ")}catch{toast("تعذر الحفظ")}});
+document.addEventListener("click",async e=>{const b=e.target.closest("button[data-del]");if(!b)return;
+  if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="تأكيد الحذف";setTimeout(()=>{b.dataset.confirm="";b.textContent="حذف"},3000);return}
+  const [col,id]=b.dataset.del.split(":");try{await remove(col,id);toast("تم الحذف")}catch{toast("تعذر الحذف")}});
+["dDate","dCur"].forEach(id=>$(id).addEventListener("change",renderDaily));
+["rColl","rFrom","rTo"].forEach(id=>$(id).addEventListener("change",renderRep));
+["sFrom","sTo","sColl","sKind"].forEach(id=>$(id).addEventListener("change",renderStmt));
+
+// ---------- Jaib PDF parsing ----------
+function parseJaibItems(items,W){
+  const col=x=>x<0.315?"desc":x<0.425?"ref":x<0.53?"op":x<0.64?"date":x<0.76?"bal":x<0.84?"cur":x<0.92?"credit":"debit";
+  const cols={};for(const it of items){const c=col((it.x+it.w/2)/W);(cols[c]||(cols[c]=[])).push(it)}
+  const linesOf=arr=>{arr.sort((a,b)=>a.y-b.y);const lines=[];for(const it of arr){const L=lines[lines.length-1];if(L&&Math.abs(L.y-it.y)<=3)L.items.push(it);else lines.push({y:it.y,items:[it]})}
+    for(const L of lines){L.items.sort((a,b)=>a.x-b.x);let out="";for(let i=L.items.length-1;i>=0;i--){const it=L.items[i];out+=it.s;if(i>0){const p=L.items[i-1];if(it.x-(p.x+p.w)>1.2)out+=" "}}
+      L.text=out.normalize("NFKC").replace(/اهلل/g,"الله").replace(/[‎‏]/g,"").replace(/\s+/g," ").trim()}return lines};
+  const L={};for(const c in cols)L[c]=linesOf(cols[c]);
+  const refs=(L.ref||[]).filter(l=>/^\d{14}$/.test(l.text));const rows=[];
+  refs.forEach((r,i)=>{const top=i?(refs[i-1].y+r.y)/2:r.y-50;const bot=i<refs.length-1?(refs[i+1].y+r.y)/2:r.y+50;
+    const txt=c=>(L[c]||[]).filter(l=>l.y>=top&&l.y<bot).map(l=>l.text).join(" ").trim();
+    rows.push({ref:r.text,desc:txt("desc"),op:txt("op"),date:txt("date"),bal:txt("bal"),cur:txt("cur"),credit:txt("credit"),debit:txt("debit")})});
+  return rows}
+const num=s=>{const m=String(s||"").replace(/,/g,"").match(/-?\d+(\.\d+)?/);return m?+m[0]:0};
+const curCode=s=>{s=String(s||"");if(/يمني/.test(s))return"YER";if(/سعود/.test(s))return"SAR";if(/دولار|امريك|أمريك/.test(s))return"USD";if(/يورو/.test(s))return"EUR";return"YER"};
+function enrich(r,file){
+  const d=r.date.match(/(\d{2})-(\d{2})-(\d{4})/);const t=r.date.match(/(\d{2}:\d{2})/);
+  const code=(r.desc.match(/\b(5356\d{2,3})\b/)||[])[1]||"";
+  const nm=r.desc.match(/تعز\s*-\s*([^\d\/()]+?)\s*(?:رقم النقطة\s*)?5356\d{2,3}/);
+  const opNo=(r.desc.match(/رقم العملية\s*\/?\s*(\d{10,14})/)||[])[1]||"";
+  const payer=(r.desc.match(/^من\s+(.+?)\s+\d{4,8}\s+الى/)||[])[1]||(r.desc.match(/^من\s+(?:المحفظة رقم\s*)?[()]*\d+[()]*\s*-\s*[()]*([^()]+)/)||[])[1]||(r.desc.match(/^من حساب محفظة\s+(.+?)\s*-/)||[])[1]||"";
+  const credit=num(r.credit),debit=num(r.debit);
+  return {id:r.ref,date:d?`${d[3]}-${d[2]}-${d[1]}`:"",time:t?t[1]:"",cur:curCode(r.cur),amount:credit||debit,kind:credit?"in":"out",code,pointName:(nm?nm[1]:"").replace(/رقم النقطة/,"").trim(),opNo,payer:payer.trim(),op:r.op.replace(/[()]/g,"").trim(),desc:r.desc,bal:num(r.bal),file,coll:""}}
+async function readPdf(file){
+  const lib=window.pdfjsLib||(window.pdfjsReady?await window.pdfjsReady:null);if(!lib)throw new Error("pdfjs");
+  const pdf=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false}).promise;const out=[];
+  for(let p=1;p<=pdf.numPages;p++){$("pStatus").textContent=`قراءة ${file.name} — صفحة ${p}/${pdf.numPages}`;const page=await pdf.getPage(p);const vp=page.getViewport({scale:1});const tc=await page.getTextContent();
+    const items=tc.items.filter(i=>i.str&&i.str.trim()).map(i=>({s:i.str,x:i.transform[4],y:vp.height-i.transform[5],w:i.width||0}));
+    out.push(...parseJaibItems(items,vp.width).map(r=>enrich(r,file.name)))}
+  return out}
+function balanceCheck(rows){ // per currency: opening + net == closing
+  const byCur={};for(const r of rows){(byCur[r.cur]||(byCur[r.cur]=[])).push(r)}const res=[];
+  for(const c in byCur){const l=byCur[c];if(l.length<2){res.push({ok:true,msg:`${CURN[c]}: ${l.length} عملية`});continue}
+    const open=l[0].bal-(l[0].kind==="in"?l[0].amount:-l[0].amount);const net=l.reduce((a,r)=>a+(r.kind==="in"?r.amount:-r.amount),0);const close=l[l.length-1].bal;const ok=Math.abs(open+net-close)<0.05;
+    res.push({ok,msg:`${CURN[c]}: ${l.length} عملية — رصيد افتتاحي ${fmt(open)} + صافي ${fmt(net)} = ${fmt(open+net)} ${ok?"يطابق الرصيد الختامي ✔":"لا يطابق الرصيد الختامي "+fmt(close)+" — قد تكون صفحات ناقصة"}`})}
+  return res}
+const drop=$("drop"),filesIn=$("files");
+async function handleFiles(list){
+  const files=[...list].filter(f=>f.type==="application/pdf"||/\.pdf$/i.test(f.name));if(!files.length){toast("اختر ملف PDF");return}
+  let rows=[];
+  for(const f of files){try{rows.push(...await readPdf(f))}catch(e){toast(`تعذر قراءة ${f.name}`)}}
+  if(!rows.length){$("pStatus").textContent="لم تُقرأ أي عملية — تأكد أن الملف كشف جيب أصلي (ليس صورة ممسوحة).";return}
+  // auto-create collectors for unknown point codes
+  const seen=new Set();let created=0;
+  for(const r of rows){if(!r.code||seen.has(r.code)||collByCode(r.code))continue;seen.add(r.code);
+    const pn=r.pointName||(rows.find(x=>x.code===r.code&&x.pointName)||{}).pointName||"";r.pointName=pn;
+    const byName=collByName(pn);
+    if(byName){try{await save("collectors",byName.id,{...stripId(byName),codes:[...(byName.codes||[]),r.code]});byName.codes=[...(byName.codes||[]),r.code]}catch{}}
+    else{const id=uid();const name=pn||`نقطة ${r.code}`;const c={name,codes:[r.code],aliases:[],ts:Date.now()};try{await save("collectors",id,c);created++}catch{}}}
+  for(const r of rows)r.coll=matchColl(r);
+  rows.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  const uniq=new Map();for(const r of rows)uniq.set(r.id,r);S.review=[...uniq.values()];
+  const checks=balanceCheck(S.review);$("pChecks").innerHTML=checks.map(c=>`<div class="alert ${c.ok?"good":"warn"}">${esc(c.msg)}</div>`).join("");
+  const dup=S.review.filter(r=>S.stmt.some(s=>s.id===r.id)).length;
+  $("pStatus").textContent=`قُرئت ${S.review.length} عملية (${S.review.filter(r=>r.kind==="in").length} واردة) — ${dup} محفوظة مسبقاً${created?` — أُنشئ ${created} محصل جديد من أرقام النقاط`:""}`;
+  renderReview();
+}
+const stripId=o=>{const {id,...rest}=o;return rest};
+filesIn.addEventListener("change",()=>{handleFiles(filesIn.files);filesIn.value=""});
+drop.addEventListener("dragover",e=>{e.preventDefault();drop.classList.add("over")});drop.addEventListener("dragleave",()=>drop.classList.remove("over"));
+drop.addEventListener("drop",e=>{e.preventDefault();drop.classList.remove("over");handleFiles(e.dataTransfer.files)});
+function renderReview(){
+  const card=$("reviewCard");card.hidden=!S.review.length;if(!S.review.length)return;
+  const opts=v=>`<option value="">— غير منسوب —</option>`+S.colls.map(c=>`<option value="${esc(c.id)}"${c.id===v?" selected":""}>${esc(c.name)}</option>`).join("");
+  const newN=S.review.filter(r=>!S.stmt.some(s=>s.id===r.id)).length;$("reviewNote").textContent=`${newN} عملية جديدة ستُحفظ`;
+  $("reviewTable").innerHTML=`<thead><tr><th>#</th><th>التاريخ</th><th>الوقت</th><th>المحصل</th><th>النقطة</th><th class="num">المبلغ</th><th>العملة</th><th>الدافع</th><th>نوع العملية</th><th>الحالة</th></tr></thead><tbody>${S.review.map((r,i)=>{const ex=S.stmt.some(s=>s.id===r.id);
+    const st=ex?'<span class="chip mute">محفوظة مسبقاً</span>':r.kind==="out"?'<span class="chip mute">صادر</span>':!r.coll?'<span class="chip mute">تُنسب من السيستم</span>':'<span class="chip good">جديدة</span>';
+    return `<tr data-k="${esc(r.id)}"><td>${i+1}</td><td class="num">${esc(r.date)}</td><td class="num">${esc(r.time)}</td><td><select data-f="coll"${ex?" disabled":""}>${opts(r.coll)}</select></td><td class="codes">${esc(r.code||"—")}</td><td class="num ${r.kind==="out"?"neg":""}">${fmt(r.amount)}</td><td>${CURN[r.cur]}</td><td class="t">${esc(r.payer||r.desc.slice(0,70))}</td><td class="t">${esc(r.op)}</td><td>${st}</td></tr>`}).join("")}</tbody>`;
+}
+$("reviewTable").addEventListener("change",e=>{if(e.target.dataset.f!=="coll")return;const r=S.review.find(x=>x.id===e.target.closest("tr").dataset.k);if(r)r.coll=e.target.value});
+$("btnClearReview").addEventListener("click",()=>{S.review=[];$("pChecks").innerHTML="";$("pStatus").textContent="";renderReview()});
+$("btnSaveReview").addEventListener("click",async()=>{
+  const fresh=S.review.filter(r=>!S.stmt.some(s=>s.id===r.id));if(!fresh.length){toast("لا توجد عمليات جديدة");return}
+  $("btnSaveReview").disabled=true;let n=0;
+  try{await saveMany("stmt",fresh.map(r=>({...r})),k=>{n=k;$("reviewNote").textContent=`جارٍ الحفظ… ${k}/${fresh.length}`});toast(`حُفظت ${n} عملية`);S.review=[];$("pChecks").innerHTML="";$("pStatus").textContent="";renderReview()}
+  catch(err){toast(`حُفظت ${n} ثم تعذر الحفظ`)}finally{$("btnSaveReview").disabled=false}});
+// reassign saved statement rows when collector codes change
+function reassign(){const ch=[];for(const r of S.stmt){if(!r.coll){const c=matchColl(r);if(c){r.coll=c;ch.push(r)}}}if(ch.length)saveMany("stmt",ch).catch(()=>{})}
+
+// ---------- boot ----------
+// ---------- login ----------
+const SK="burj-token";let USERS=[];
+function renderUsers(){$("uTable").innerHTML=`<thead><tr><th>اسم المستخدم</th><th>الصلاحية</th><th></th></tr></thead><tbody>${USERS.map(u=>`<tr><td>${esc(u.u)}</td><td>${u.role==="admin"?"مدير":"مستخدم"}</td><td>${S.user&&u.u===S.user.u?'<span class="note">أنت</span>':`<button class="sm danger" data-udel="${esc(u.u)}">حذف</button>`}</td></tr>`).join("")}</tbody>`}
+function setStatus(ok,t){$("status").classList.toggle("ok",ok);$("statusTxt").textContent=t}
+async function loadData(){setStatus(false,"جارٍ التحميل…");
+  const d=await call("loadAll",S.token);
+  S.colls=(d.collectors||[]).sort((a,b)=>(a.ts||0)-(b.ts||0));S.stmt=d.stmt||[];S.vouchers=d.vouchers||[];S.entries=d.entries||[];
+  S.settings={...S.settings,...(d.settings||{})};S.loadedAt=Date.now();
+  reassign();renderAll();setStatus(true,"متصل — آخر تحديث "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}))}
+async function enter(res){S.token=res.token;S.user=res.user;try{sessionStorage.setItem(SK,JSON.stringify(res))}catch{}
+  $("auth").hidden=true;$("app").hidden=false;$("who").hidden=false;$("whoName").textContent=`${res.user.u} (${res.user.role==="admin"?"مدير":"مستخدم"})`;
+  $("usersCard").hidden=res.user.role!=="admin";
+  try{await loadData()}catch(e){setStatus(false,"تعذر التحميل: "+e.message);return}
+  if(res.user.role==="admin"){try{USERS=await call("listUsers",S.token);renderUsers()}catch{}}}
+function sessionEnded(){try{sessionStorage.removeItem(SK)}catch{}S.token=null;$("app").hidden=true;$("auth").hidden=false;$("auPass2Wrap").hidden=true;$("auBtn").textContent="دخول";$("authNote").textContent="انتهت الجلسة، ادخل من جديد.";S.setup=false}
+async function authInit(){$("app").hidden=true;
+  let saved=null;try{saved=JSON.parse(sessionStorage.getItem(SK)||"null")}catch{}
+  if(saved&&saved.token){enter(saved);return}
+  $("auth").hidden=false;$("authNote").textContent="جارٍ الاتصال…";$("auBtn").disabled=true;
+  try{const st=await call("authStatus");S.setup=st.setup}catch(e){$("authNote").textContent="تعذر الاتصال بالخادم: "+e.message;return}
+  $("auBtn").disabled=false;$("auPass2Wrap").hidden=!S.setup;$("auBtn").textContent=S.setup?"إنشاء حساب المدير":"دخول";
+  $("authNote").textContent=S.setup?"أول تشغيل: أنشئ حساب المدير. احفظ الرمز جيداً فلا يمكن استرجاعه.":"أدخل اسم المستخدم والرمز.";$("auUser").focus()}
+$("authForm").addEventListener("submit",async e=>{e.preventDefault();const name=$("auUser").value.trim(),pw=$("auPass").value;$("auErr").textContent="";
+  if(S.setup){if(name.length<2){$("auErr").textContent="اسم المستخدم قصير";return}if(pw.length<4){$("auErr").textContent="الرمز 4 خانات على الأقل";return}if(pw!==$("auPass2").value){$("auErr").textContent="الرمزان غير متطابقين";return}}
+  $("auBtn").disabled=true;$("auErr").textContent="جارٍ التحقق…";
+  try{const res=await call(S.setup?"setupAdmin":"login",name,pw);$("auErr").textContent="";$("auPass").value="";$("auPass2").value="";S.setup=false;enter(res)}
+  catch(err){$("auErr").textContent=err.message;$("auPass").value=""}finally{$("auBtn").disabled=false}});
+$("btnLogout").addEventListener("click",async()=>{try{await call("logout",S.token)}catch{}try{sessionStorage.removeItem(SK)}catch{}location.reload()});
+$("btnRefresh").addEventListener("click",()=>loadData().catch(e=>setStatus(false,"تعذر التحديث: "+e.message)));
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S.token&&Date.now()-(S.loadedAt||0)>120000)loadData().catch(()=>{})});
+$("userForm").addEventListener("submit",async e=>{e.preventDefault();const name=$("uName").value.trim(),pw=$("uPass").value;
+  try{USERS=await call("addUser",S.token,name,pw,$("uRole").value);$("uName").value="";$("uPass").value="";renderUsers();toast("أُضيف المستخدم")}catch(err){toast(err.message)}});
+$("uTable").addEventListener("click",async e=>{const b=e.target.closest("button[data-udel]");if(!b)return;
+  if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="تأكيد الحذف";setTimeout(()=>{b.dataset.confirm="";b.textContent="حذف"},3000);return}
+  try{USERS=await call("deleteUser",S.token,b.dataset.udel);renderUsers();toast("حُذف المستخدم")}catch(err){toast(err.message)}});
+
+authInit();
+})();
+</script>
+</body>
+</html>
